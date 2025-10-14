@@ -25,3 +25,12 @@ class SearchAnimeReleasesBySearch extends SearchEvent{
   @override
   List<Object> get props => [query];
 }
+
+class RecommendedAnimeReleases extends SearchEvent{
+  const RecommendedAnimeReleases({required this.limit});
+  
+  final int limit;
+
+  @override
+  List<Object> get props => [limit];
+}

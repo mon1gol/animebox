@@ -21,6 +21,9 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     BlocProvider.of<SearchBloc>(context).add(SearchAnimeReleases(limit: 10));
+    BlocProvider.of<SearchBloc>(
+      context,
+    ).add(RecommendedAnimeReleases(limit: 10));
     _animeBySearchController.addListener(_onQueryChanged);
     super.initState();
   }
@@ -37,7 +40,23 @@ class _SearchPageState extends State<SearchPage> {
             },
           ),
         ),
-        SliverToBoxAdapter(child: AnimeListHorizontal()),
+        BlocBuilder<SearchBloc, SearchState>(
+          builder: (context, state) {
+            final loadedState = state as SearchLoaded;
+
+            if (loadedState.error != null) {
+              return SliverErrorMessage(error: loadedState.error.toString());
+            }
+
+            if (loadedState.isLoading &&
+                loadedState.recommendedAnimeReleases.isEmpty) {
+              return SliverFillRemaining(child: Center());
+            }
+
+            final anime = loadedState.recommendedAnimeReleases;
+            return SliverToBoxAdapter(child: AnimeListHorizontal(anime: anime));
+          },
+        ),
 
         BlocBuilder<SearchBloc, SearchState>(
           builder: (context, state) {

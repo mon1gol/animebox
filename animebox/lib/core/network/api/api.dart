@@ -21,4 +21,7 @@ abstract class AnimeApiClient {
 
   @GET('/app/search/releases')
   Future<List<AnimeReleases>> getAnimeReleasesBySearch(@Query('query') String? query);
+
+  @GET('/anime/releases/recommended')
+  Future<List<AnimeReleases>> getRecommendedAnimeReleases(@Query('limit') int? limit);
 }

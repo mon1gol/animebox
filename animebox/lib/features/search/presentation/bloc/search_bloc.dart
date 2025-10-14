@@ -43,6 +43,23 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         emit((state as SearchLoaded).copyWith(isLoading: false, error: e));
       }
     });
+
+    on<RecommendedAnimeReleases>((event, emit) async {
+      emit((state as SearchLoaded).copyWith(isLoading: true));
+
+      try {
+        final recommendedAnimeReleases = await apiClient
+            .getRecommendedAnimeReleases(event.limit);
+        emit(
+          (state as SearchLoaded).copyWith(
+            recommendedAnimeReleases: recommendedAnimeReleases,
+            isLoading: false,
+          ),
+        );
+      } catch (e) {
+        emit((state as SearchLoaded).copyWith(isLoading: false, error: e));
+      }
+    });
   }
 
   final AnimeApiClient apiClient;

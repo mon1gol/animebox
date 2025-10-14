@@ -12,12 +12,14 @@ final class SearchLoaded extends SearchState {
   const SearchLoaded({
     this.animeReleases = const [],
     this.animeReleasesBySearch = const [],
+    this.recommendedAnimeReleases = const [],
     this.isLoading = false,
     this.error,
   });
 
   final List<AnimeReleases> animeReleases;
   final List<AnimeReleases> animeReleasesBySearch;
+  final List<AnimeReleases> recommendedAnimeReleases;
   final bool isLoading;
   final Object? error;
 
@@ -25,6 +27,7 @@ final class SearchLoaded extends SearchState {
   List<Object?> get props => [
     animeReleases,
     animeReleasesBySearch,
+    recommendedAnimeReleases,
     isLoading,
     error,
   ];
@@ -32,6 +35,7 @@ final class SearchLoaded extends SearchState {
   SearchLoaded copyWith({
     List<AnimeReleases>? animeReleases,
     List<AnimeReleases>? animeReleasesBySearch,
+    List<AnimeReleases>? recommendedAnimeReleases,
     bool? isLoading,
     Object? error,
   }) {
@@ -39,6 +43,8 @@ final class SearchLoaded extends SearchState {
       animeReleases: animeReleases ?? this.animeReleases,
       animeReleasesBySearch:
           animeReleasesBySearch ?? this.animeReleasesBySearch,
+      recommendedAnimeReleases:
+          recommendedAnimeReleases ?? this.recommendedAnimeReleases,
       isLoading: isLoading ?? this.isLoading,
       error: error ?? this.error,
     );
