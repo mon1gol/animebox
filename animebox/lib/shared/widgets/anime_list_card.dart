@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Sliver сетка для расположения карточек
-/// 
+///
 /// Для children использовать только список обычных виджетов, не sliver
 class SliverGridCardsContainer extends StatelessWidget {
   const SliverGridCardsContainer({super.key, required this.children});
@@ -15,7 +15,7 @@ class SliverGridCardsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverGrid.count(
       mainAxisSpacing: 16,
-      childAspectRatio: 0.8,
+      childAspectRatio: 0.7,
       crossAxisCount: 2,
       children: children,
     );
@@ -48,54 +48,63 @@ class _AnimeCardState extends State<AnimeCard> {
       'Запланировано': Colors.blue,
     };
 
-    return BaseCardContainer(
-      width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 12),
-      backgroundImageUrl: fullImageUrl,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        BaseCardContainer(
+          height: 180,
+          width: double.infinity,
+          margin: EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 12),
+          backgroundImageUrl: fullImageUrl,
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.circle,
-                    size: 16,
-                    color: statusMap[_statusValue] ?? Colors.white,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.circle,
+                        size: 16,
+                        color: statusMap[_statusValue] ?? Colors.white,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.topRight,
-                child: PopupMenuButton(
-                  onSelected: (value) => changeStatusValue(value),
-                  icon: Icon(Icons.more_horiz),
-                  itemBuilder: (context) => statusMap.keys.map((status) {
-                    return PopupMenuItem(
-                      value: status,
-                      child: Text(status),
-                      onTap: () {},
-                    );
-                  }).toList(),
-                ),
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: PopupMenuButton(
+                      onSelected: (value) => changeStatusValue(value),
+                      icon: Icon(Icons.more_horiz),
+                      itemBuilder: (context) => statusMap.keys.map((status) {
+                        return PopupMenuItem(
+                          value: status,
+                          child: Text(status),
+                          onTap: () {},
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Text(
-              overflow: TextOverflow.fade,
-              maxLines: 3,
-              animeRelease.name?.main ?? 'АниБокс',
-              style: theme.textTheme.titleSmall,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            animeRelease.name?.main ?? 'АниБокс',
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+            style: theme.textTheme.titleSmall?.copyWith(
+              fontWeight: FontWeight.w500,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

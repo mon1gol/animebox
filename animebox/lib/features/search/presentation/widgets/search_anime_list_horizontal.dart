@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AnimeListHorizontal extends StatelessWidget {
   const AnimeListHorizontal({super.key, required this.anime});
-
   final List<AnimeReleases> anime;
 
   @override
@@ -15,23 +14,35 @@ class AnimeListHorizontal extends StatelessWidget {
     final String baseUrl = context.read<SearchBloc>().baseUrl;
 
     return SizedBox(
-      height: 250,
+      height: 280, // увеличил, чтобы поместилсяx текст
       child: ListView.builder(
         itemCount: anime.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           final imageUrl = anime[index].poster?.fullSrc(baseUrl);
-          return BaseCardContainer(
-            backgroundImageUrl: imageUrl,
-            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-            width: 250,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Text(
-                anime[index].name?.main ?? "АниБокс",
-                style: theme.textTheme.titleMedium,
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // 🔸 Карточка
+              BaseCardContainer(
+                height: 200,
+                width: 160,
+                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                backgroundImageUrl: imageUrl,
+                child: const SizedBox(), // или оставьте пустым
               ),
-            ),
+              // 🔸 Текст снаружи
+              SizedBox(
+                width: 160,
+                child: Text(
+                  anime[index].name?.main ?? "АниБокс",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.titleSmall,
+                ),
+              ),
+            ],
           );
         },
       ),
