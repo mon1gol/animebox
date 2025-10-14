@@ -19,19 +19,25 @@ class BaseCardContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
-      width: width,
-      margin: margin,
-      padding:
-          padding ?? const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      decoration: BoxDecoration(
-        image: backgroundImageUrl != null
-            ? DecorationImage(image: NetworkImage(backgroundImageUrl!))
-            : null,
-        borderRadius: BorderRadius.circular(16),
-        color: theme.cardColor,
+    return AspectRatio(
+      aspectRatio: 3 / 3,
+      child: Container(
+        width: width,
+        margin: margin,
+        padding:
+            padding ?? const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        decoration: BoxDecoration(
+          image: backgroundImageUrl != null
+              ? DecorationImage(
+                  image: NetworkImage(backgroundImageUrl!),
+                  fit: BoxFit.cover,
+                )
+              : null,
+          borderRadius: BorderRadius.circular(16),
+          color: theme.cardColor,
+        ),
+        child: child,
       ),
-      child: child,
     );
   }
 }
