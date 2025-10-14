@@ -1,0 +1,39 @@
+name: animebox
+description: "A new Flutter project."
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  retrofit: ^4.6.0
+  logger: ^2.6.0
+  json_annotation: ^4.9.0
+
+  cupertino_icons: ^1.0.8
+  auto_route: ^10.1.2
+  dio: ^5.9.0
+  flutter_dotenv: ^6.0.0
+  flutter_bloc: ^9.1.1
+  equatable: ^2.0.7
+  meta: ^1.16.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  retrofit_generator: ^10.0.1
+  json_serializable: ^6.10.0
+
+  flutter_lints: 6.0.0
+  auto_route_generator: ^10.2.3
+  build_runner: ^2.5.4
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .env
