@@ -1,6 +1,7 @@
 import 'package:animebox/core/errors/sliver_error_message.dart';
 import 'package:animebox/core/widgets/index.dart';
 import 'package:animebox/features/search/presentation/bloc/search_bloc.dart';
+import 'package:animebox/features/search/presentation/widgets/cards_title.dart';
 import 'package:animebox/features/search/presentation/widgets/index.dart';
 import 'package:animebox/shared/widgets/index.dart';
 import 'package:auto_route/auto_route.dart';
@@ -54,9 +55,17 @@ class _SearchPageState extends State<SearchPage> {
             }
 
             final anime = loadedState.recommendedAnimeReleases;
-            return SliverToBoxAdapter(child: AnimeListHorizontal(anime: anime));
+            return SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  CardsTitle(title: 'Рекомендации'),
+                  AnimeListHorizontal(anime: anime),
+                ],
+              ),
+            );
           },
         ),
+        SliverToBoxAdapter(child: CardsTitle(title: 'Новые релизы')),
 
         BlocBuilder<SearchBloc, SearchState>(
           builder: (context, state) {

@@ -27,7 +27,7 @@ class AnimeListHorizontal extends StatelessWidget {
               BaseCardContainer(
                 height: 200,
                 width: 160,
-                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                margin: const EdgeInsets.symmetric(horizontal: 8),
                 backgroundImageUrl: imageUrl,
                 child: const SizedBox(), // или оставьте пустым
               ),
