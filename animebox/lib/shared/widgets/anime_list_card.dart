@@ -38,7 +38,7 @@ class _AnimeCardState extends State<AnimeCard> {
     final theme = Theme.of(context);
     final animeRelease = widget.anime;
     final String baseUrl = context.read<SearchBloc>().baseUrl;
-    final fullImageUrl = animeRelease!.poster?.fullSrc(baseUrl);
+    final fullImageUrl = animeRelease?.poster?.fullSrc(baseUrl);
 
     final Map<String, Color> statusMap = {
       'Смотрю': Colors.grey,
@@ -95,7 +95,7 @@ class _AnimeCardState extends State<AnimeCard> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
-            animeRelease.name?.main ?? 'АниБокс',
+            animeRelease?.name?.main ?? 'АниБокс',
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
