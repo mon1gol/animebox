@@ -1,4 +1,5 @@
 import 'package:animebox/core/network/api/api.dart';
+import 'package:animebox/core/utils/database/drift.dart';
 import 'package:animebox/core/utils/routes.dart';
 import 'package:animebox/core/utils/theme.dart';
 import 'package:animebox/features/search/presentation/bloc/search_bloc.dart';
@@ -9,11 +10,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
-  runApp(AniBoxApp());
+  final driftDatabase = AniDatabase();
+  runApp(AniBoxApp(driftDatabase: driftDatabase));
 }
 
 class AniBoxApp extends StatefulWidget {
-  const AniBoxApp({super.key});
+  const AniBoxApp({super.key, required this.driftDatabase});
+
+  final AniDatabase driftDatabase;
 
   @override
   State<AniBoxApp> createState() => _AniBoxAppState();
@@ -28,6 +32,7 @@ class _AniBoxAppState extends State<AniBoxApp> {
       create: (context) => SearchBloc(
         apiClient: AnimeApiClient.create(apiUrl: dotenv.env['API_URL']),
         baseUrl: dotenv.env['API_URL_BASE']!,
+        database: widget.driftDatabase,
       ),
       child: MaterialApp.router(
         title: 'АниБокс',

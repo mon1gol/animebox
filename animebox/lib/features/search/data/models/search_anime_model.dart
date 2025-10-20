@@ -71,6 +71,8 @@ class Poster extends Equatable {
 
   factory Poster.fromJson(Map<String, dynamic> json) => _$PosterFromJson(json);
 
+  Map<String, dynamic> toJson() => _$PosterToJson(this);
+
   String fullSrc(String baseUrl) => '$baseUrl$src';
   String fullPreview(String baseUrl) => '$baseUrl$preview';
   String fullThumbnail(String baseUrl) => '$baseUrl$thumbnail';
@@ -88,6 +90,8 @@ class PublishDay extends Equatable {
 
   factory PublishDay.fromJson(Map<String, dynamic> json) =>
       _$PublishDayFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PublishDayToJson(this);
 
   @override
   List<Object?> get props => [value, description];

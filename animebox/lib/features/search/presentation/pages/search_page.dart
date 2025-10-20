@@ -46,7 +46,10 @@ class _SearchPageState extends State<SearchPage> {
             final loadedState = state as SearchLoaded;
 
             if (loadedState.error != null) {
-              return SliverErrorMessage(error: loadedState.error.toString());
+              return SliverErrorMessage(
+                error: loadedState.error.toString(),
+                stack: loadedState.stack.toString(),
+              );
             }
 
             if (loadedState.isLoading &&
@@ -72,7 +75,10 @@ class _SearchPageState extends State<SearchPage> {
             final loadedState = state as SearchLoaded;
 
             if (loadedState.error != null) {
-              return SliverErrorMessage(error: loadedState.error.toString());
+              return SliverErrorMessage(
+                error: loadedState.error.toString(),
+                stack: loadedState.stack.toString(),
+              );
             }
 
             if (loadedState.isLoading && loadedState.animeReleases.isEmpty) {
