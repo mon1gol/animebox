@@ -1,6 +1,4 @@
 import 'package:animebox/core/utils/database/tables/anime_releases_table.dart';
-import 'package:drift/drift.dart';
-import "package:drift/src/runtime/data_class.dart";
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -26,7 +24,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         if (cached.isNotEmpty) {
           searchLoadedReleasesSuccess(
             emit: emit,
-            animeReleases: cached.map((anime) => anime.toModel()).toList(),
+            animeReleases: cached
+                .map((anime) => anime.toModel())
+                .nonNulls
+                .toList(),
             isFromCache: true,
           );
         }

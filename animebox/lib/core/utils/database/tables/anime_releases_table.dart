@@ -20,35 +20,51 @@ class AnimeReleasesTable extends Table {
 }
 
 extension AnimeReleasesTableX on AnimeReleasesTableData {
-  AnimeReleases toModel() {
-    return AnimeReleases(
-      id: id,
-      name: Name.fromJson(jsonDecode(nameJson!)),
-      poster: Poster.fromJson(jsonDecode(posterJson!)),
-      freshAt: freshAt,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      isOngoing: isOngoing,
-      publishDay: PublishDay.fromJson(jsonDecode(publishDayJson!)),
-      description: description,
-    );
+  AnimeReleases? toModel() {
+    if (nameJson == null || posterJson == null || publishDayJson == null) {
+      return null;
+    }
+
+    try {
+      return AnimeReleases(
+        id: id,
+        name: Name.fromJson(jsonDecode(nameJson!) as Map<String, dynamic>),
+        poster: Poster.fromJson(
+          jsonDecode(posterJson!) as Map<String, dynamic>,
+        ),
+        freshAt: freshAt,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        isOngoing: isOngoing,
+        publishDay: PublishDay.fromJson(
+          jsonDecode(publishDayJson!) as Map<String, dynamic>,
+        ),
+        description: description,
+      );
+    } catch (e) {
+      return null;
+    }
   }
 }
 
 extension AnimeReleasesX on AnimeReleases {
   AnimeReleasesTableCompanion toCompanion() {
     return AnimeReleasesTableCompanion(
-      id: Value(id!),
+      id: id != null ? Value(id!) : const Value.absent(),
       freshAt: Value(freshAt),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
       isOngoing: Value(isOngoing),
       description: Value(description),
-      nameJson: Value(name != null ? jsonEncode(name!.toJson()) : null),
-      posterJson: Value(poster != null ? jsonEncode(poster!.toJson()) : null),
-      publishDayJson: Value(
-        publishDay != null ? jsonEncode(publishDay!.toJson()) : null,
-      ),
+      nameJson: name != null
+          ? Value(jsonEncode(name!.toJson()))
+          : const Value(null),
+      posterJson: poster != null
+          ? Value(jsonEncode(poster!.toJson()))
+          : const Value(null),
+      publishDayJson: publishDay != null
+          ? Value(jsonEncode(publishDay!.toJson()))
+          : const Value(null),
     );
   }
 }
