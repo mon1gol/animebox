@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animebox/core/errors/sliver_error_message.dart';
 import 'package:animebox/core/widgets/index.dart';
 import 'package:animebox/features/search/presentation/bloc/search_bloc.dart';
@@ -31,71 +33,83 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SimpleAppBar(
-          title: 'АниБокс',
-          child: SearchButton(
-            onTap: () {
-              _showSearchBottomSheet(context);
+    return RefreshIndicator(
+      onRefresh: () async {
+        final completer = Completer();
+        BlocProvider.of<SearchBloc>(
+          context,
+        ).add(SearchAnimeReleases(limit: 10, completer: completer));
+        BlocProvider.of<SearchBloc>(
+          context,
+        ).add(RecommendedAnimeReleases(limit: 10));
+        return completer.future;
+      },
+      child: CustomScrollView(
+        slivers: [
+          SimpleAppBar(
+            title: 'АниБокс',
+            child: SearchButton(
+              onTap: () {
+                _showSearchBottomSheet(context);
+              },
+            ),
+          ),
+          BlocBuilder<SearchBloc, SearchState>(
+            builder: (context, state) {
+              final loadedState = state as SearchLoaded;
+
+              if (loadedState.error != null) {
+                return SliverErrorMessage(
+                  error: loadedState.error.toString(),
+                  stack: loadedState.stack.toString(),
+                );
+              }
+
+              if (loadedState.isLoading &&
+                  loadedState.recommendedAnimeReleases.isEmpty) {
+                return SliverFillRemaining(child: Center());
+              }
+
+              final anime = loadedState.recommendedAnimeReleases;
+              return SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    CardsTitle(title: 'Рекомендации'),
+                    AnimeListHorizontal(anime: anime),
+                  ],
+                ),
+              );
             },
           ),
-        ),
-        BlocBuilder<SearchBloc, SearchState>(
-          builder: (context, state) {
-            final loadedState = state as SearchLoaded;
+          SliverToBoxAdapter(child: CardsTitle(title: 'Новые релизы')),
 
-            if (loadedState.error != null) {
-              return SliverErrorMessage(
-                error: loadedState.error.toString(),
-                stack: loadedState.stack.toString(),
+          BlocBuilder<SearchBloc, SearchState>(
+            builder: (context, state) {
+              final loadedState = state as SearchLoaded;
+
+              if (loadedState.error != null) {
+                return SliverErrorMessage(
+                  error: loadedState.error.toString(),
+                  stack: loadedState.stack.toString(),
+                );
+              }
+
+              if (loadedState.isLoading && loadedState.animeReleases.isEmpty) {
+                return SliverFillRemaining(
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
+
+              final anime = loadedState.animeReleases;
+              return SliverGridCardsContainer(
+                children: anime
+                    .map((animeItem) => AnimeCard(anime: animeItem))
+                    .toList(),
               );
-            }
-
-            if (loadedState.isLoading &&
-                loadedState.recommendedAnimeReleases.isEmpty) {
-              return SliverFillRemaining(child: Center());
-            }
-
-            final anime = loadedState.recommendedAnimeReleases;
-            return SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  CardsTitle(title: 'Рекомендации'),
-                  AnimeListHorizontal(anime: anime),
-                ],
-              ),
-            );
-          },
-        ),
-        SliverToBoxAdapter(child: CardsTitle(title: 'Новые релизы')),
-
-        BlocBuilder<SearchBloc, SearchState>(
-          builder: (context, state) {
-            final loadedState = state as SearchLoaded;
-
-            if (loadedState.error != null) {
-              return SliverErrorMessage(
-                error: loadedState.error.toString(),
-                stack: loadedState.stack.toString(),
-              );
-            }
-
-            if (loadedState.isLoading && loadedState.animeReleases.isEmpty) {
-              return SliverFillRemaining(
-                child: Center(child: CircularProgressIndicator()),
-              );
-            }
-
-            final anime = loadedState.animeReleases;
-            return SliverGridCardsContainer(
-              children: anime
-                  .map((animeItem) => AnimeCard(anime: animeItem))
-                  .toList(),
-            );
-          },
-        ),
-      ],
+            },
+          ),
+        ],
+      ),
     );
   }
 

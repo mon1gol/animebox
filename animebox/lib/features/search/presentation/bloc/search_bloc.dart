@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animebox/core/utils/database/tables/anime_releases_table.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,6 +51,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         );
       } catch (e, s) {
         emitError(emit, e, s);
+      } finally {
+        event.completer?.complete();
       }
     });
 
