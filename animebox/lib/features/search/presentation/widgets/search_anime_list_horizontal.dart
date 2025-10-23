@@ -1,3 +1,4 @@
+import 'package:animebox/features/anime_card/presentation/pages/anime_card_page.dart';
 import 'package:animebox/features/search/data/models/search_anime_model.dart';
 import 'package:animebox/features/search/presentation/bloc/search_bloc.dart';
 import 'package:animebox/shared/widgets/index.dart';
@@ -24,12 +25,22 @@ class AnimeListHorizontal extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               // 🔸 Карточка
-              BaseCardContainer(
-                height: 200,
-                width: 160,
-                margin: const EdgeInsets.symmetric(horizontal: 8),
-                backgroundImageUrl: imageUrl,
-                child: const SizedBox(), // или оставьте пустым
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (context) => AnimeCardPage(),
+                      settings: RouteSettings(arguments: anime[index]),
+                    ),
+                  );
+                },
+                child: BaseCardContainer(
+                  height: 200,
+                  width: 160,
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
+                  backgroundImageUrl: imageUrl,
+                  child: const SizedBox(), // или оставьте пустым
+                ),
               ),
               // 🔸 Текст снаружи
               SizedBox(
