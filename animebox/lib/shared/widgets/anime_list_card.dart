@@ -1,3 +1,4 @@
+import 'package:animebox/features/anime_card/presentation/pages/anime_card_page.dart';
 import 'package:animebox/features/search/data/models/search_anime_model.dart';
 import 'package:animebox/features/search/presentation/bloc/search_bloc.dart';
 import 'package:animebox/shared/widgets/index.dart';
@@ -51,45 +52,55 @@ class _AnimeCardState extends State<AnimeCard> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        BaseCardContainer(
-          height: 180,
-          width: double.infinity,
-          margin: EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 12),
-          backgroundImageUrl: fullImageUrl,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.circle,
-                        size: 16,
-                        color: statusMap[_statusValue] ?? Colors.white,
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (context) => AnimeCardPage(),
+                settings: RouteSettings(arguments: animeRelease),
+              ),
+            );
+          },
+          child: BaseCardContainer(
+            height: 180,
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 12),
+            backgroundImageUrl: fullImageUrl,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.circle,
+                          size: 16,
+                          color: statusMap[_statusValue] ?? Colors.white,
+                        ),
                       ),
                     ),
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: PopupMenuButton(
-                      onSelected: (value) => changeStatusValue(value),
-                      icon: Icon(Icons.more_horiz),
-                      itemBuilder: (context) => statusMap.keys.map((status) {
-                        return PopupMenuItem(
-                          value: status,
-                          child: Text(status),
-                          onTap: () {},
-                        );
-                      }).toList(),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: PopupMenuButton(
+                        onSelected: (value) => changeStatusValue(value),
+                        icon: Icon(Icons.more_horiz),
+                        itemBuilder: (context) => statusMap.keys.map((status) {
+                          return PopupMenuItem(
+                            value: status,
+                            child: Text(status),
+                            onTap: () {},
+                          );
+                        }).toList(),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
         Padding(

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:animebox/features/search/data/models/search_anime_model.dart';
 import 'package:animebox/features/search/presentation/bloc/search_bloc.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +42,12 @@ class AnimeCardPage extends StatelessWidget {
             SizedBox(height: 20),
             Row(
               children: [
-                Icon(Icons.circle, color: Colors.lightGreen),
+                isOngoing != null
+                    ? Icon(
+                        Icons.circle,
+                        color: isOngoing ? Colors.amber : Colors.lightGreen,
+                      )
+                    : Text(''),
                 SizedBox(width: 5),
                 isOngoing != null
                     ? Text(
