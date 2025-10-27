@@ -19,6 +19,7 @@ class SettingsToggleCard extends StatelessWidget {
     final theme = Theme.of(context);
     return BaseCardContainer(
       width: double.infinity,
+      height: 60,
       margin: EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 12),
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
@@ -31,4 +32,3 @@ class SettingsToggleCard extends StatelessWidget {
     );
   }
 }
-

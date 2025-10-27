@@ -19,6 +19,7 @@ class SettingsActionCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: BaseCardContainer(
+        height: 60,
         width: double.infinity,
         margin: EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 12),
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
