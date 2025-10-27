@@ -32,11 +32,11 @@ extension AnimeReleasesTableX on AnimeReleasesTableData {
         poster: Poster.fromJson(
           jsonDecode(posterJson!) as Map<String, dynamic>,
         ),
-        freshAt: freshAt,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        isOngoing: isOngoing,
-        publishDay: PublishDay.fromJson(
+        fresh_at: freshAt,
+        created_at: createdAt,
+        updated_at: updatedAt,
+        is_ongoing: isOngoing,
+        publish_day: PublishDay.fromJson(
           jsonDecode(publishDayJson!) as Map<String, dynamic>,
         ),
         description: description,
@@ -51,10 +51,10 @@ extension AnimeReleasesX on AnimeReleases {
   AnimeReleasesTableCompanion toCompanion() {
     return AnimeReleasesTableCompanion(
       id: id != null ? Value(id!) : const Value.absent(),
-      freshAt: Value(freshAt),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-      isOngoing: Value(isOngoing),
+      freshAt: Value(fresh_at),
+      createdAt: Value(created_at),
+      updatedAt: Value(updated_at),
+      isOngoing: Value(is_ongoing),
       description: Value(description),
       nameJson: name != null
           ? Value(jsonEncode(name!.toJson()))
@@ -62,8 +62,8 @@ extension AnimeReleasesX on AnimeReleases {
       posterJson: poster != null
           ? Value(jsonEncode(poster!.toJson()))
           : const Value(null),
-      publishDayJson: publishDay != null
-          ? Value(jsonEncode(publishDay!.toJson()))
+      publishDayJson: publish_day != null
+          ? Value(jsonEncode(publish_day!.toJson()))
           : const Value(null),
     );
   }

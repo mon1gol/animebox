@@ -15,13 +15,13 @@ AnimeReleases _$AnimeReleasesFromJson(Map<String, dynamic> json) =>
       poster: json['poster'] == null
           ? null
           : Poster.fromJson(json['poster'] as Map<String, dynamic>),
-      freshAt: json['freshAt'] as String?,
-      createdAt: json['createdAt'] as String?,
-      updatedAt: json['updatedAt'] as String?,
-      isOngoing: json['isOngoing'] as bool?,
-      publishDay: json['publishDay'] == null
+      fresh_at: json['fresh_at'] as String?,
+      created_at: json['created_at'] as String?,
+      updated_at: json['updated_at'] as String?,
+      is_ongoing: json['is_ongoing'] as bool?,
+      publish_day: json['publish_day'] == null
           ? null
-          : PublishDay.fromJson(json['publishDay'] as Map<String, dynamic>),
+          : PublishDay.fromJson(json['publish_day'] as Map<String, dynamic>),
       description: json['description'] as String?,
     );
 
@@ -30,11 +30,11 @@ Map<String, dynamic> _$AnimeReleasesToJson(AnimeReleases instance) =>
       'id': instance.id,
       'name': instance.name,
       'poster': instance.poster,
-      'freshAt': instance.freshAt,
-      'createdAt': instance.createdAt,
-      'updatedAt': instance.updatedAt,
-      'isOngoing': instance.isOngoing,
-      'publishDay': instance.publishDay,
+      'fresh_at': instance.fresh_at,
+      'created_at': instance.created_at,
+      'updated_at': instance.updated_at,
+      'is_ongoing': instance.is_ongoing,
+      'publish_day': instance.publish_day,
       'description': instance.description,
     };
 

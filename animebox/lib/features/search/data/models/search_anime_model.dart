@@ -9,22 +9,22 @@ class AnimeReleases extends Equatable {
     this.id,
     this.name,
     this.poster,
-    this.freshAt,
-    this.createdAt,
-    this.updatedAt,
-    this.isOngoing,
-    this.publishDay,
+    this.fresh_at,
+    this.created_at,
+    this.updated_at,
+    this.is_ongoing,
+    this.publish_day,
     this.description,
   });
 
   final int? id;
   final Name? name;
   final Poster? poster;
-  final String? freshAt;
-  final String? createdAt;
-  final String? updatedAt;
-  final bool? isOngoing;
-  final PublishDay? publishDay;
+  final String? fresh_at;
+  final String? created_at;
+  final String? updated_at;
+  final bool? is_ongoing;
+  final PublishDay? publish_day;
   final String? description;
 
   factory AnimeReleases.fromJson(Map<String, dynamic> json) =>
@@ -37,11 +37,11 @@ class AnimeReleases extends Equatable {
     id,
     name,
     poster,
-    freshAt,
-    createdAt,
-    updatedAt,
-    isOngoing,
-    publishDay,
+    fresh_at,
+    created_at,
+    updated_at,
+    is_ongoing,
+    publish_day,
     description,
   ];
 }
