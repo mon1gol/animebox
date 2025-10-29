@@ -15,9 +15,9 @@ Future<void> main() async {
 }
 
 class AniBoxApp extends StatefulWidget {
-  const AniBoxApp({super.key, required this.driftDatabase});
+  const AniBoxApp({super.key, this.driftDatabase});
 
-  final AniDatabase driftDatabase;
+  final AniDatabase? driftDatabase;
 
   @override
   State<AniBoxApp> createState() => _AniBoxAppState();

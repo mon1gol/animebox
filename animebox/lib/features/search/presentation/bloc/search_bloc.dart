@@ -16,34 +16,41 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc({
     required this.apiClient,
     required this.baseUrl,
-    required this.database,
-  }) : super(SearchLoaded()) {
+    AniDatabase? database,
+  }) : _database = database,
+       super(SearchLoaded()) {
     on<SearchAnimeReleases>((event, emit) async {
       emit((state as SearchLoaded).copyWith(isLoading: true));
 
       try {
-        final cached = await database.select(database.animeReleasesTable).get();
-        if (cached.isNotEmpty) {
-          searchLoadedReleasesSuccess(
-            emit: emit,
-            animeReleases: cached
-                .map((anime) => anime.toModel())
-                .nonNulls
-                .toList(),
-            isFromCache: true,
-          );
+        if (_database != null) {
+          final cached = await _database
+              .select(_database.animeReleasesTable)
+              .get();
+          if (cached.isNotEmpty) {
+            searchLoadedReleasesSuccess(
+              emit: emit,
+              animeReleases: cached
+                  .map((anime) => anime.toModel())
+                  .nonNulls
+                  .toList(),
+              isFromCache: true,
+            );
+          }
         }
 
         final animeReleases = await apiClient.getAnimeReleases(event.limit);
         final companions = animeReleases
             .map((anime) => anime.toCompanion())
             .toList();
-        await database.batch((batch) {
-          batch.insertAllOnConflictUpdate(
-            database.animeReleasesTable,
-            companions,
-          );
-        });
+        if (_database != null) {
+          await _database.batch((batch) {
+            batch.insertAllOnConflictUpdate(
+              _database.animeReleasesTable,
+              companions,
+            );
+          });
+        }
         searchLoadedReleasesSuccess(
           emit: emit,
           animeReleases: animeReleases,
@@ -126,5 +133,5 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   final AnimeApiClient apiClient;
   final String baseUrl;
-  final AniDatabase database;
+  final AniDatabase? _database;
 }

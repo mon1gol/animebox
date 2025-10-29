@@ -35,7 +35,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        final completer = Completer();
+        final completer = Completer<void>();
         BlocProvider.of<SearchBloc>(
           context,
         ).add(SearchAnimeReleases(limit: 10, completer: completer));
